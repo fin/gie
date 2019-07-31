@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## gie
 
-gie is a package for wrapping the GIE REST API.
+gie is an R package for wrapping the Gas Infrastructure Europe (GIE) REST API.
 
 ## API Key
 
