@@ -2,7 +2,7 @@
 % Please edit documentation in R/gie_eic.R
 \name{gie_eic}
 \alias{gie_eic}
-\title{Get the aggregated historical data export for for a specific country.}
+\title{Get the historical data export for for a specific company within a country.}
 \usage{
 gie_eic(country_code, eic_code, api_key = NULL)
 }
@@ -15,7 +15,7 @@ gie_eic(country_code, eic_code, api_key = NULL)
 file.}
 }
 \description{
-Get the aggregated historical data export for for a specific country.
+Get the historical data export for for a specific company within a country.
 }
 \examples{
 {

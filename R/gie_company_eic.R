@@ -1,4 +1,4 @@
-#' Get the aggregated historical data export for for a specific country.
+#' Get the historical data export for for a specific facility from a company within a country.
 #'
 #' @param country_code Two digit country code. Ex: NL, DE, DK, SE, FI etc.
 #' @param eic_code The 21 digit eic code of the facility as found on the API page.
