@@ -1,0 +1,80 @@
+---
+title: "Untitled"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## gie
+
+gie is a package for wrapping the GIE REST API.
+
+## API Key
+
+The official documentation from GIE can be found [here](https://agsi.gie.eu/GIE_API_documentation_v003.pdf)
+
+Before proceeding with the examples you need to get a token / API key from the [GIE homepage](https://agsi.gie.eu/#/api). On the API page you can lookup EIC codes for the companies and facilities.
+
+## Installation
+
+Simply install from GitHub.
+
+```
+
+remotes::install_github("krose/gie")
+
+```
+
+## Usage
+
+There are four functions. The paramters in the functions are upper-/lower-case sensitive.
+
+The first function gets the aggregated historical data for Europe or Non Europe.
+
+```{r first, message=FALSE, warning=FALSE}
+
+library(tidyverse)
+library(gie)
+
+eu <- gie_aggregate("eu")
+ne <- gie_aggregate("ne")
+glimpse(eu)
+
+```
+
+The second function gets the aggregated historical data for a specific country.
+
+```{r second}
+
+nl <- gie_country("NL")
+glimpse(nl)
+
+```
+
+The third function gets the historical data for a specific company wihtin a country. You can lookup the EIC codes from the API webpage.
+
+```{r third}
+
+eic <- gie_eic("PL", "53XPL000000PLNG6")
+glimpse(eic)
+
+```
+
+The last and fourth function gets the historical data for a specific facility from a company wihtin a country. You can lookup the different EIC codes from the API webpage.
+
+```{r fourth}
+
+eic <- gie_company_eic(country_code = "DE",
+                       eic_code = "21W000000000100J",
+                       eic_company_code = "21X000000001368W")
+glimpse(eic)
+
+```
+
+
+## Future Development
+
+If needed, params for 'from', 'till' and 'limit' can be implemented.
+
