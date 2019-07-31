@@ -42,6 +42,15 @@ gie_aggregate <- function(area, api_key = NULL){
   cont <- httr::content(resp, as = "text", encoding = "UTF-8")
 
   cont_df <- jsonlite::fromJSON(cont)
+  cont_df$info <- sapply(cont_df$info, function(x){
+    if(length(x) < 1){
+      x <- as.character(NA)
+    } else {
+      x <- paste(x, collapse = ";")
+    }
+    x
+  })
+  cont_df <- suppressMessages(readr::type_convert(cont_df))
 
   cont_df
 }
