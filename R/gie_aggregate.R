@@ -9,10 +9,23 @@
 #' @examples {
 #'
 #' library(gie)
+#' library(tidyverse)
 #'
 #' ne <- gie_aggregate("ne")
 #' eu <- gie_aggregate("eu")
 #'
+#' eu %>%
+#'   mutate(yr = year(gasDayStartedOn),
+#'          mnth = month(gasDayStartedOn),
+#'          mday = mday(gasDayStartedOn)) %>%
+#'   filter(mnth == 7) %>%
+#'   group_by(yr) %>%
+#'   filter(mday == max(mday)) %>%
+#'   ungroup() %>%
+#'   ggplot(., aes(gasDayStartedOn, gasInStorage)) +
+#'   geom_col() +
+#'   geom_point(aes(gasDayStartedOn, workingGasVolume)) +
+#'   labs(title = "End of June Gas Storage")
 #' }
 #'
 gie_aggregate <- function(area, api_key = NULL){
