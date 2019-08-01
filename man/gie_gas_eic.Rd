@@ -17,3 +17,11 @@ file.}
 \description{
 Get the historical data export for for a specific company within a country.
 }
+\examples{
+
+library(tidyverse)
+library(gie)
+
+head(gie_gas_eic("AT", "25X-GSALLC-----E"))
+
+}

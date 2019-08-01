@@ -44,7 +44,7 @@ gie_gas_country <- function(country_code, api_key = NULL){
   cont_df <- jsonlite::fromJSON(cont)
 
   if(length(cont_df) == 0){
-    stop("No content for this country.")
+    stop("No data for this country.")
   }
 
   cont_df$info <- sapply(cont_df$info, function(x){
@@ -106,7 +106,7 @@ gie_lng_country <- function(country_code, api_key = NULL){
   cont_df <- jsonlite::fromJSON(cont)
 
   if(length(cont_df) == 0){
-    stop("No content for this country.")
+    stop("No data for this country.")
   }
   cont_df$info <- sapply(cont_df$info, function(x){
     if(length(x) < 1){

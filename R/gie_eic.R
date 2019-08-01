@@ -7,6 +7,12 @@
 #'
 #' @export
 #'
+#' @examples
+#'
+#' library(tidyverse)
+#' library(gie)
+#'
+#' head(gie_gas_eic("AT", "25X-GSALLC-----E"))
 #'
 gie_gas_eic <- function(country_code, eic_code, api_key = NULL){
 
@@ -35,6 +41,11 @@ gie_gas_eic <- function(country_code, eic_code, api_key = NULL){
   cont <- httr::content(resp, as = "text", encoding = "UTF-8")
 
   cont_df <- jsonlite::fromJSON(cont)
+
+  if(length(cont_df) == 0){
+    stop("No data with these parameters.")
+  }
+
   cont_df$info <- sapply(cont_df$info, function(x){
     if(length(x) < 1){
       x <- as.character(NA)
@@ -86,6 +97,11 @@ gie_lng_eic <- function(country_code, eic_code, api_key = NULL){
   cont <- httr::content(resp, as = "text", encoding = "UTF-8")
 
   cont_df <- jsonlite::fromJSON(cont)
+
+  if(length(cont_df) == 0){
+    stop("No data with these parameters.")
+  }
+
   cont_df$info <- sapply(cont_df$info, function(x){
     if(length(x) < 1){
       x <- as.character(NA)

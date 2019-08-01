@@ -55,6 +55,11 @@ gie_gas_aggregate <- function(area, api_key = NULL){
   cont <- httr::content(resp, as = "text", encoding = "UTF-8")
 
   cont_df <- jsonlite::fromJSON(cont)
+
+  if(length(cont_df) == 0){
+    stop("No data for this area.")
+  }
+
   cont_df$info <- sapply(cont_df$info, function(x){
     if(length(x) < 1){
       x <- as.character(NA)
@@ -126,6 +131,11 @@ gie_lng_aggregate <- function(area, api_key = NULL){
   cont <- httr::content(resp, as = "text", encoding = "UTF-8")
 
   cont_df <- jsonlite::fromJSON(cont)
+
+  if(length(cont_df) == 0){
+    stop("No data for this area.")
+  }
+
   cont_df$info <- sapply(cont_df$info, function(x){
     if(length(x) < 1){
       x <- as.character(NA)
