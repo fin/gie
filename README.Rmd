@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "gie R Package"
 output: github_document
 ---
 
@@ -16,6 +16,13 @@ gie is an R package for wrapping the Gas Infrastructure Europe (GIE) REST API.
 The official documentation from GIE can be found [here](https://agsi.gie.eu/GIE_API_documentation_v003.pdf)
 
 Before proceeding with the examples you need to get a token / API key from the [GIE homepage](https://agsi.gie.eu/#/api). On the API page you can lookup EIC codes for the companies and facilities.
+
+## EIC Codes
+
+You can find the EIC codes here:
+
+- Gas: https://agsi.gie.eu/#/api
+- LNG: https://alsi.gie.eu/#/api
 
 ## Installation
 
@@ -38,9 +45,11 @@ The first function gets the aggregated historical data for Europe or Non Europe.
 library(tidyverse)
 library(gie)
 
-eu <- gie_aggregate("eu")
-ne <- gie_aggregate("ne")
-glimpse(eu)
+ne_gas <- gie_gas_aggregate("ne")
+eu_lng <- gie_lng_aggregate("eu")
+
+glimpse(ne_gas)
+glimpse(eu_lng)
 
 ```
 
@@ -48,7 +57,8 @@ The second function gets the aggregated historical data for a specific country.
 
 ```{r second}
 
-nl <- gie_country("NL")
+nl <- gie_gas_country("NL")
+gb <- gie_lng_country("GB")
 glimpse(nl)
 
 ```
@@ -56,9 +66,11 @@ glimpse(nl)
 The third function gets the historical data for a specific company wihtin a country. You can lookup the EIC codes from the API webpage.
 
 ```{r third}
+eic_gas <- gie_gas_eic("AT", "25X-GSALLC-----E")
+eic_lng <- gie_lng_eic("PL", "53XPL000000PLNG6")
 
-eic <- gie_eic("PL", "53XPL000000PLNG6")
-glimpse(eic)
+glimpse(eic_gas)
+glimpse(eic_lng)
 
 ```
 
@@ -66,10 +78,15 @@ The last and fourth function gets the historical data for a specific facility fr
 
 ```{r fourth}
 
-eic <- gie_company_eic(country_code = "DE",
+eic_gas <- gie_gas_company_eic(country_code = "DE",
                        eic_code = "21W000000000100J",
                        eic_company_code = "21X000000001368W")
-glimpse(eic)
+eic_lng <- gie_lng_company_eic(country_code = "IT",
+                       eic_code = "59W0000000000011",
+                       eic_company_code = "26X00000117915-0")
+glimpse(eic_gas)
+glimpse(eic_lng)
+
 
 ```
 
