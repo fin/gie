@@ -68,7 +68,7 @@ gie_gas_aggregate <- function(area, api_key = NULL){
     }
     x
   })
-  cont_df <- suppressMessages(readr::type_convert(cont_df))
+  cont_df <- suppressMessages(readr::type_convert(cont_df, na = c("", "NA", "-")))
 
   cont_df
 }
@@ -144,7 +144,7 @@ gie_lng_aggregate <- function(area, api_key = NULL){
     }
     x
   })
-  cont_df <- suppressMessages(readr::type_convert(cont_df))
+  cont_df <- suppressMessages(readr::type_convert(cont_df, na = c("", "NA", "-")))
 
   cont_df
 }

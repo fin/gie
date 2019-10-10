@@ -49,7 +49,7 @@ gie_gas_company_eic <- function(country_code, eic_code, eic_company_code, api_ke
     }
     x
   })
-  cont_df <- suppressMessages(readr::type_convert(cont_df))
+  cont_df <- suppressMessages(readr::type_convert(cont_df, na = c("", "NA", "-")))
 
   cont_df
 }
@@ -115,7 +115,7 @@ gie_lng_company_eic <- function(country_code, eic_code, eic_company_code, api_ke
     }
     x
   })
-  cont_df <- suppressMessages(readr::type_convert(cont_df))
+  cont_df <- suppressMessages(readr::type_convert(cont_df, na = c("", "NA", "-")))
 
   cont_df
 }
