@@ -17,17 +17,25 @@ The official documentation from GIE can be found [here](https://agsi.gie.eu/GIE_
 
 Before proceeding with the examples you need to get a token / API key from the [GIE homepage](https://agsi.gie.eu/#/api). On the API page you can lookup EIC codes for the companies and facilities.
 
-Before proceeding with the examples you need to get a token / API key from the GIE homepage. Save the token to a file you name ".Renviron" and put it into your working directory. If you end up saving the file as .Renviron.txt or similar, you have made a mistake.
+Before proceeding with the examples you need to get a token / API key from the GIE homepage. Save the token to a file you name ".Renviron" and save the file to your working directory. If you end up saving the file as .Renviron.txt or similar, you have made a mistake.
 
 The .Renviron file content should look something like this:
 
 ```
-GIE_PAT = "<you-token>"
+GIE_PAT = "<your-token>"
 
 ```
 
 Before you proceed, you need to RESTART R. R reads the .Renviron file on start-up, so to make sure everything works, you need to restart R.
 
+You can also add the snippet below to the beginning of your script, but the solution above is advised as
+it's not good practice to add tokens to your scripts.
+
+
+```
+Sys.setenv(GIE_PAT = "<your-token>")
+
+```
 
 ## EIC Codes
 
