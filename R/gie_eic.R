@@ -115,3 +115,41 @@ gie_lng_eic <- function(country_code, eic_code, api_key = NULL){
   cont_df
 }
 
+
+#' Function to get a list of EIC units.
+#'
+#' @param unnest_facilities Defaults to true.
+#'
+#' @export
+#'
+#'
+gie_lng_eic_list <- function(unnest_facilities = TRUE){
+
+  eic <- jsonlite::fromJSON("https://alsi.gie.eu/api/eic-listing/LSO/view",  simplifyVector = TRUE, simplifyDataFrame = TRUE, simplifyMatrix = TRUE, flatten = TRUE)
+  eic <- tibble::as_tibble(eic)
+
+  if(unnest_facilities){
+    eic <- tidyr::unnest(eic, facilities, names_sep = "_")
+  }
+  eic
+}
+
+
+#' Function to get a list of EIC units.
+#'
+#' @param unnest_facilities Defaults to true.
+#'
+#' @export
+#'
+#'
+gie_gas_eic_list <- function(unnest_facilities = TRUE){
+
+  eic <- jsonlite::fromJSON("https://agsi.gie.eu/api/eic-listing/SSO/view",  simplifyVector = TRUE, simplifyDataFrame = TRUE, simplifyMatrix = TRUE, flatten = TRUE)
+  eic <- tibble::as_tibble(eic)
+
+  if(unnest_facilities){
+    eic <- tidyr::unnest(eic, facilities, names_sep = "_")
+  }
+  eic
+}
+
