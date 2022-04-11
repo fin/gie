@@ -83,12 +83,14 @@ gie_gas_date <- function(date = Sys.Date() - 1, api_key = NULL){
   df_child3$children <-
     lapply(df_child3$children,
            function(x){
+             if(is.null(x))return(NULL)
              x <- dplyr::select(x, -info)
              x
            })
   df_child3 <- tidyr::unnest(df_child3, children)
   df_child3 <- dplyr::rename(df_child3, storage_code = code, storage_name = name)
   df_child3 <- dplyr::mutate(df_child3, data_level = 3L)
+  if("children" %in% names(df_child3)) df_child3 <- dplyr::select(df_child3, -children)
 
   df_child1 <- dplyr::select(df_child1, -children)
   df_child2 <- dplyr::select(df_child2, -children)
