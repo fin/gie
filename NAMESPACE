@@ -3,6 +3,7 @@
 export(gie_gas_aggregate)
 export(gie_gas_company_eic)
 export(gie_gas_country)
+export(gie_gas_date)
 export(gie_gas_eic)
 export(gie_gas_eic_list)
 export(gie_lng_aggregate)
