@@ -5,11 +5,12 @@
 #' @param eic_company_code The 21 digit eic code of the company as found on the API page.
 #' @param api_key The default is NULL and searches for your GIE_PAT in you .Renviron
 #'     file.
+#' @param ... Forwarded to [gie_internal_page_request()]
 #'
 #' @export
 #'
 #'
-gie_gas_company_eic <- function(country_code, eic_code, eic_company_code, api_key = NULL){
+gie_gas_company_eic <- function(country_code, eic_code, eic_company_code, api_key = NULL, ...){
 
   area <- toupper(country_code)
 
@@ -17,27 +18,12 @@ gie_gas_company_eic <- function(country_code, eic_code, eic_company_code, api_ke
     stop("country_code only accepts a vector of length one.")
   }
 
-  if(is.null(api_key)){
-    api_key <- Sys.getenv("GIE_PAT")
-  }
 
   url <- paste0("https://agsi.gie.eu/api/data/", eic_code, "/", country_code, "/", eic_company_code)
 
-  resp <- httr::GET(url = url,
-                    httr::add_headers("x-key" = api_key))
+  cont_df <- gie_internal_page_request(url, api_key, ...)
 
-  if(httr::status_code(resp) != 200){
-    status_httr <- httr::http_status(resp)
-    stop(paste("Category:", status_httr$category,
-               "Reason:", status_httr$reason,
-               "Message:", status_httr$message))
-  }
-
-  cont <- httr::content(resp, as = "text", encoding = "UTF-8")
-
-  cont_df <- jsonlite::fromJSON(cont)
-
-  if(length(cont_df) == 0){
+  if(nrow(cont_df) == 0){
     stop("No data with these parameters.")
   }
 
@@ -75,7 +61,7 @@ gie_gas_company_eic <- function(country_code, eic_code, eic_company_code, api_ke
 #'
 #' }
 #'
-gie_lng_company_eic <- function(country_code, eic_code, eic_company_code, api_key = NULL){
+gie_lng_company_eic <- function(country_code, eic_code, eic_company_code, api_key = NULL, ...){
 
   area <- toupper(country_code)
 
@@ -83,27 +69,12 @@ gie_lng_company_eic <- function(country_code, eic_code, eic_company_code, api_ke
     stop("country_code only accepts a vector of length one.")
   }
 
-  if(is.null(api_key)){
-    api_key <- Sys.getenv("GIE_PAT")
-  }
 
   url <- paste0("https://alsi.gie.eu/api/data/", eic_code, "/", country_code, "/", eic_company_code)
 
-  resp <- httr::GET(url = url,
-                    httr::add_headers("x-key" = api_key))
+  cont_df <- gie_internal_page_request(url, api_key, ...)
 
-  if(httr::status_code(resp) != 200){
-    status_httr <- httr::http_status(resp)
-    stop(paste("Category:", status_httr$category,
-               "Reason:", status_httr$reason,
-               "Message:", status_httr$message))
-  }
-
-  cont <- httr::content(resp, as = "text", encoding = "UTF-8")
-
-  cont_df <- jsonlite::fromJSON(cont)
-
-  if(length(cont_df) == 0){
+  if(nrow(cont_df) == 0){
     stop("No data with these parameters.")
   }
 

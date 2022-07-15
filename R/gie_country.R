@@ -15,7 +15,7 @@
 #'
 #' }
 #'
-gie_gas_country <- function(country_code, api_key = NULL){
+gie_gas_country <- function(country_code, api_key = NULL, ...){
 
   area <- toupper(country_code)
 
@@ -23,30 +23,16 @@ gie_gas_country <- function(country_code, api_key = NULL){
     stop("country_code only accepts a vector of length one.")
   }
 
-  if(is.null(api_key)){
-    api_key <- Sys.getenv("GIE_PAT")
-  }
 
   url <- paste0("https://agsi.gie.eu/api/data/", country_code)
 
-  resp <- httr::GET(url = url,
-                    httr::add_headers("x-key" = api_key))
 
-  if(httr::status_code(resp) != 200){
-    status_httr <- httr::http_status(resp)
-    stop(paste("Category:", status_httr$category,
-               "Reason:", status_httr$reason,
-               "Message:", status_httr$message))
-  }
 
-  cont <- httr::content(resp, as = "text", encoding = "UTF-8")
+  cont_df <- gie_internal_page_request(url, api_key, ...)
 
-  cont_df <- jsonlite::fromJSON(cont)
-
-  if(length(cont_df) == 0){
+  if(nrow(cont_obj) == 0){
     stop("No data for this country.")
   }
-
   cont_df$info <- sapply(cont_df$info, function(x){
     if(length(x) < 1){
       x <- as.character(NA)
@@ -77,7 +63,7 @@ gie_gas_country <- function(country_code, api_key = NULL){
 #'
 #' }
 #'
-gie_lng_country <- function(country_code, api_key = NULL){
+gie_lng_country <- function(country_code, api_key = NULL, ...){
 
   area <- toupper(country_code)
 
@@ -85,27 +71,12 @@ gie_lng_country <- function(country_code, api_key = NULL){
     stop("country_code only accepts a vector of length one.")
   }
 
-  if(is.null(api_key)){
-    api_key <- Sys.getenv("GIE_PAT")
-  }
 
   url <- paste0("https://alsi.gie.eu/api/data/", country_code)
 
-  resp <- httr::GET(url = url,
-                    httr::add_headers("x-key" = api_key))
+  cont_df <- gie_internal_page_request(url, api_key, ...)
 
-  if(httr::status_code(resp) != 200){
-    status_httr <- httr::http_status(resp)
-    stop(paste("Category:", status_httr$category,
-               "Reason:", status_httr$reason,
-               "Message:", status_httr$message))
-  }
-
-  cont <- httr::content(resp, as = "text", encoding = "UTF-8")
-
-  cont_df <- jsonlite::fromJSON(cont)
-
-  if(length(cont_df) == 0){
+  if(nrow(cont_df) == 0){
     stop("No data for this country.")
   }
   cont_df$info <- sapply(cont_df$info, function(x){
