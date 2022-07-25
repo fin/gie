@@ -6,10 +6,10 @@ gie R Package
 gie is an R package for wrapping the Gas Infrastructure Europe (GIE)
 REST API.
 
-## API Key
+This version is adapted to the recent (as of 2022) API version that returns
+partial results, requiring paging.
 
-The official documentation from GIE can be found
-[here](https://agsi.gie.eu/GIE_API_documentation_v003.pdf)
+## API Key
 
 Before proceeding with the examples you need to get a token / API key
 from the [GIE homepage](https://agsi.gie.eu/#/api). On the API page you
