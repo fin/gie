@@ -4,7 +4,7 @@
 \alias{gie_gas_country}
 \title{Get the aggregated historical data export for for a specific country.}
 \usage{
-gie_gas_country(country_code, api_key = NULL)
+gie_gas_country(country_code, api_key = NULL, ...)
 }
 \arguments{
 \item{country_code}{Two digit country code. Ex: NL, DE, DK, SE, FI etc.}

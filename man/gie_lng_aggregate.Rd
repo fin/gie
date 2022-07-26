@@ -4,7 +4,7 @@
 \alias{gie_lng_aggregate}
 \title{Get the aggregated historical data export for Europe or Non Europe}
 \usage{
-gie_lng_aggregate(area, api_key = NULL)
+gie_lng_aggregate(area, api_key = NULL, ...)
 }
 \arguments{
 \item{area}{eu for Europe, ne for Non Europe.}

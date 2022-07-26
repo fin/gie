@@ -4,7 +4,13 @@
 \alias{gie_gas_company_eic}
 \title{Get the historical data export for for a specific facility from a company within a country.}
 \usage{
-gie_gas_company_eic(country_code, eic_code, eic_company_code, api_key = NULL)
+gie_gas_company_eic(
+  country_code,
+  eic_code,
+  eic_company_code,
+  api_key = NULL,
+  ...
+)
 }
 \arguments{
 \item{country_code}{Two digit country code. Ex: NL, DE, DK, SE, FI etc.}
@@ -15,6 +21,8 @@ gie_gas_company_eic(country_code, eic_code, eic_company_code, api_key = NULL)
 
 \item{api_key}{The default is NULL and searches for your GIE_PAT in you .Renviron
 file.}
+
+\item{...}{Forwarded to [gie_internal_page_request()]}
 }
 \description{
 Get the historical data export for for a specific facility from a company within a country.
