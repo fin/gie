@@ -4,7 +4,7 @@
 \alias{gie_internal_page_request}
 \title{Get the historical data export for for a specific facility from a company within a country.}
 \usage{
-gie_internal_page_request(url, api_key, max_pages = 10)
+gie_internal_page_request(url, api_key, max_pages = 10, country_code)
 }
 \arguments{
 \item{url}{The base URL to request}
