@@ -4,13 +4,16 @@
 \alias{gie_gas_aggregate}
 \title{Get the aggregated historical data export for Europe or Non Europe}
 \usage{
-gie_gas_aggregate(area, api_key = NULL, ...)
+gie_gas_aggregate(area, api_key = NULL, max_pages = 1000, ...)
 }
 \arguments{
 \item{area}{eu for Europe, ne for Non Europe.}
 
 \item{api_key}{The default is NULL and searches for your GIE_PAT in you .Renviron
 file.}
+
+\item{max_pages}{How many pages to return in the paginated results. Defaults to 1000
+so all results are returned as default.}
 }
 \description{
 Get the aggregated historical data export for Europe or Non Europe
