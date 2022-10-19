@@ -46,6 +46,11 @@ gie_internal_page_request <- function(url, api_key, max_pages=10, country_code) 
     Sys.sleep(1.05 - request_time)
   }
 
+  pages_to_get <- min(c(max_pages, cont_obj$last_page))
+
+  # Initialise a progress bar
+  pb <- txtProgressBar(min = 1, max = pages_to_get, style = 3)
+
   while(page<cont_obj$last_page && page<max_pages) {
     page <- page + 1
 
@@ -74,6 +79,7 @@ gie_internal_page_request <- function(url, api_key, max_pages=10, country_code) 
     if(request_time < 1){
       Sys.sleep(1.05 - request_time)
     }
+    setTxtProgressBar(pb, page)
   }
 
   cont_df
@@ -128,6 +134,11 @@ gie_internal_page_request_lng <- function(url, api_key, max_pages=10, country_co
     Sys.sleep(1.05 - request_time)
   }
 
+  pages_to_get <- min(c(max_pages, cont_obj$last_page))
+
+  # Initialise a progress bar
+  pb <- txtProgressBar(min = 1, max = pages_to_get, style = 3)
+
   while(page<cont_obj$last_page && page<max_pages) {
     page <- page + 1
 
@@ -156,6 +167,7 @@ gie_internal_page_request_lng <- function(url, api_key, max_pages=10, country_co
     if(request_time < 1){
       Sys.sleep(1.05 - request_time)
     }
+    setTxtProgressBar(pb, page)
   }
 
   cont_df
