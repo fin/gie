@@ -13,8 +13,9 @@ gie_internal_page_request <- function(url, api_key, max_pages=10, country_code) 
   }
 
 
-  resp <- httr::GET(url = url,
-                    httr::add_headers("x-key" = api_key))
+  resp <- httr::RETRY('GET',
+                      url = url,
+                      httr::add_headers("x-key" = api_key))
 
   if(httr::status_code(resp) != 200){
     status_httr <- httr::http_status(resp)
@@ -45,8 +46,9 @@ gie_internal_page_request <- function(url, api_key, max_pages=10, country_code) 
 
     url <- paste0("https://agsi.gie.eu/api/data/", country_code, "?page=", page)
 
-    resp <- httr::GET(url = url,
-                      httr::add_headers("x-key" = api_key))
+    resp <- httr::RETRY('GET',
+                        url = url,
+                        httr::add_headers("x-key" = api_key))
 
     if(httr::status_code(resp) != 200){
       status_httr <- httr::http_status(resp)
