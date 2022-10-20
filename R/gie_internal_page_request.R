@@ -14,7 +14,7 @@ gie_internal_page_request <- function(url, api_key, max_pages=10, country_code) 
 
 
   resp <- httr::RETRY('GET',
-                      url = paste0(url, '?size=300',
+                      url = paste0(url, '?size=300'),
                       httr::add_headers("x-key" = api_key))
 
   if(httr::status_code(resp) != 200){
