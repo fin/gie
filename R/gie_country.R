@@ -24,7 +24,7 @@ gie_gas_country <- function(country_code, api_key = NULL, ...){
   }
 
 
-  url <- paste0("https://agsi.gie.eu/api?type=", country_code)
+  url <- paste0("https://agsi.gie.eu/api?country=", country_code, "&size=300")
 
 
 
@@ -42,6 +42,7 @@ gie_gas_country <- function(country_code, api_key = NULL, ...){
     x
   })
   cont_df <- suppressMessages(readr::type_convert(cont_df, na = c("", "NA", "-")))
+  cont_df <- dplyr::arrange(cont_df, gasDayStart)
 
   cont_df
 }
@@ -63,7 +64,7 @@ gie_gas_country <- function(country_code, api_key = NULL, ...){
 #'
 #' }
 #'
-gie_lng_country <- function(country_code, api_key = NULL){
+gie_lng_country <- function(country_code, api_key = NULL, max_pages = 5000){
 
   area <- toupper(country_code)
 
@@ -75,9 +76,9 @@ gie_lng_country <- function(country_code, api_key = NULL){
     api_key <- Sys.getenv("GIE_PAT")
   }
 
-  url <- paste0("https://alsi.gie.eu/api?type=", country_code)
+  url <- paste0("https://alsi.gie.eu/api?country=", country_code, "&size=300")
 
-  cont_df <- gie_internal_page_request(url, api_key, max_pages = 5000, country_code = country_code)
+  cont_df <- gie_internal_page_request_lng(url, api_key, max_pages = max_pages, country_code = country_code)
 
   if(nrow(cont_df) == 0){
     stop("No data for this country.")
@@ -91,6 +92,7 @@ gie_lng_country <- function(country_code, api_key = NULL){
     x
   })
   cont_df <- suppressMessages(readr::type_convert(cont_df, na = c("", "NA", "-")))
+  cont_df <- dplyr::arrange(cont_df, gasDayStart)
 
   cont_df
 }

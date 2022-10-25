@@ -32,14 +32,14 @@
 #'
 gie_gas_aggregate <- function(area, api_key = NULL, max_pages = 1000, ...){
 
-  area <- tolower(area)
+  area <- toupper(area)
   country_code = area
 
   # if(!area %in% c("ne", "eu") & length(area) > 1){
   #   stop("Area only accepts 'eu' or 'ne' and not both.")
   # }
 
-  url <- paste0("https://agsi.gie.eu/api?type=", area)
+  url <- paste0("https://agsi.gie.eu/api?continent=", area, "&size=300")
 
   cont_df <- gie_internal_page_request(url, api_key, max_pages = max_pages, country_code)
 
@@ -56,6 +56,8 @@ gie_gas_aggregate <- function(area, api_key = NULL, max_pages = 1000, ...){
     x
   })
   cont_df <- suppressMessages(readr::type_convert(cont_df, na = c("", "NA", "-")))
+
+  cont_df <- dplyr::arrange(cont_df, gasDayStart)
 
   cont_df
 }
@@ -95,10 +97,10 @@ gie_gas_aggregate <- function(area, api_key = NULL, max_pages = 1000, ...){
 #'
 gie_lng_aggregate <- function(area, api_key = NULL, max_pages = 1000){
 
-  area <- tolower(area)
+  area <- toupper(area)
   country_code = area
 
-  if(!area %in% c("ne", "eu") & length(area) > 1){
+  if(!area %in% c("NE", "EU") & length(area) > 1){
     stop("Area only accepts 'eu' or 'ne' and not both.")
   }
 
@@ -106,7 +108,7 @@ gie_lng_aggregate <- function(area, api_key = NULL, max_pages = 1000){
     api_key <- Sys.getenv("GIE_PAT")
   }
 
-  url <- paste0("https://alsi.gie.eu/api?type=", area)
+  url <- paste0("https://alsi.gie.eu/api?continent=", area, "&size=300")
 
   cont_df <- gie_internal_page_request_lng(url, api_key, max_pages = max_pages, country_code = country_code)
 
@@ -123,6 +125,8 @@ gie_lng_aggregate <- function(area, api_key = NULL, max_pages = 1000){
     x
   })
   cont_df <- suppressMessages(readr::type_convert(cont_df, na = c("", "NA", "-")))
+
+  cont_df <- dplyr::arrange(cont_df, gasDayStart)
 
   cont_df
 }

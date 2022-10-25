@@ -56,7 +56,11 @@ gie_internal_page_request <- function(url, api_key, max_pages=10, country_code) 
 
     time_stamp <- Sys.time()
 
-    url <- paste0("https://agsi.gie.eu/api?type=", country_code, "?page=", page)
+    if(country_code %in% c("EU", "NE")){
+      url <- paste0("https://agsi.gie.eu/api?continent=", country_code, "&size=300&page=", page)
+    } else {
+      url <- paste0("https://agsi.gie.eu/api?country=", country_code, "&size=300&page=", page)
+    }
 
     resp <- httr::GET(url = url,
                       httr::add_headers("x-key" = api_key))
@@ -144,7 +148,11 @@ gie_internal_page_request_lng <- function(url, api_key, max_pages=10, country_co
 
     time_stamp <- Sys.time()
 
-    url <- paste0("https://alsi.gie.eu/api?type=", country_code, "?page=", page)
+    if(country_code %in% c("EU", "NE")){
+      url <- paste0("https://alsi.gie.eu/api?continent=", country_code, "&size=300&page=", page)
+    } else {
+      url <- paste0("https://alsi.gie.eu/api?country=", country_code, "&size=300&page=", page)
+    }
 
     resp <- httr::GET(url = url,
                       httr::add_headers("x-key" = api_key))
