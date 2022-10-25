@@ -104,6 +104,26 @@ gie_lng_eic_list <- function(unnest_facilities = TRUE){
   eic
 }
 
+#' Function to get a list of EIC units with some more info.
+#'
+#' @export
+#'
+#'
+gie_lng_eic_list_full <- function(){
+
+  eic <- jsonlite::fromJSON("https://alsi.gie.eu/api/about", simplifyDataFrame = TRUE, simplifyVector = TRUE, simplifyMatrix = TRUE, flatten = TRUE)
+  eic <- tibble::as_tibble(eic)
+  eic <- tidyr::unnest(eic, LSO)
+  eic <- tidyr::unnest(eic, LSO)
+  eic <- dplyr::mutate(eic,
+                facilities = lapply(facilities,
+                                    function(x){names(x) <- paste0("facilities_", names(x));x}))
+  eic <- tidyr::unnest(eic, facilities)
+  names(eic) <- stringr::str_replace_all(names(eic), "[.]", "_")
+
+  eic
+}
+
 
 #' Function to get a list of EIC units.
 #'
@@ -123,3 +143,22 @@ gie_gas_eic_list <- function(unnest_facilities = TRUE){
   eic
 }
 
+#' Function to get a list of EIC units with some more info.
+#'
+#' @export
+#'
+#'
+gie_gas_eic_list_full <- function(){
+
+  eic <- jsonlite::fromJSON("https://agsi.gie.eu/api/about", simplifyDataFrame = TRUE, simplifyVector = TRUE, simplifyMatrix = TRUE, flatten = TRUE)
+  eic <- tibble::as_tibble(eic)
+  eic <- tidyr::unnest(eic, SSO)
+  eic <- tidyr::unnest(eic, SSO)
+  eic <- dplyr::mutate(eic,
+                       facilities = lapply(facilities,
+                                           function(x){names(x) <- paste0("facilities_", names(x));x}))
+  eic <- tidyr::unnest(eic, facilities)
+  names(eic) <- stringr::str_replace_all(names(eic), "[.]", "_")
+
+  eic
+}
