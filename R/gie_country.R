@@ -3,6 +3,7 @@
 #' @param country_code Two digit country code. Ex: NL, DE, DK, SE, FI etc.
 #' @param api_key The default is NULL and searches for your GIE_PAT in you .Renviron
 #'     file.
+#' @param max_pages Maximum number of pages to download. Defaults to 5000 to get all.
 #'
 #' @export
 #'
@@ -15,7 +16,7 @@
 #'
 #' }
 #'
-gie_gas_country <- function(country_code, api_key = NULL, ...){
+gie_gas_country <- function(country_code, api_key = NULL, max_pages = 5000){
 
   country_code <- toupper(country_code)
 
@@ -28,7 +29,7 @@ gie_gas_country <- function(country_code, api_key = NULL, ...){
 
 
 
-  cont_df <- gie_internal_page_request(url, api_key, max_pages = 5000, country_code = country_code)
+  cont_df <- gie_internal_page_request(url, api_key, max_pages = max_pages, country_code = country_code)
 
   if(nrow(cont_df) == 0){
     stop("No data for this country.")

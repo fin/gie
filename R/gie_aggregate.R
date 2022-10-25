@@ -30,7 +30,7 @@
 #'   labs(title = "End of June Gas Storage")
 #' }
 #'
-gie_gas_aggregate <- function(area, api_key = NULL, max_pages = 1000, ...){
+gie_gas_aggregate <- function(area, api_key = NULL, max_pages = 1000){
 
   area <- toupper(area)
   country_code = area
