@@ -95,7 +95,7 @@ gie_lng_eic <- function(country_code, eic_code, api_key = NULL, ...){
 #'
 gie_lng_eic_list <- function(unnest_facilities = TRUE){
 
-  eic <- jsonlite::fromJSON("https://alsi.gie.eu/api/eic-listing/LSO/view",  simplifyVector = TRUE, simplifyDataFrame = TRUE, simplifyMatrix = TRUE, flatten = TRUE)
+  eic <- jsonlite::fromJSON("https://alsi.gie.eu/api/about?show=listing", simplifyDataFrame = TRUE, simplifyVector = TRUE, simplifyMatrix = TRUE, flatten = TRUE)
   eic <- tibble::as_tibble(eic)
 
   if(unnest_facilities){
@@ -114,7 +114,7 @@ gie_lng_eic_list <- function(unnest_facilities = TRUE){
 #'
 gie_gas_eic_list <- function(unnest_facilities = TRUE){
 
-  eic <- jsonlite::fromJSON("https://agsi.gie.eu/api/eic-listing/SSO/view",  simplifyVector = TRUE, simplifyDataFrame = TRUE, simplifyMatrix = TRUE, flatten = TRUE)
+  eic <- jsonlite::fromJSON("https://agsi.gie.eu/api/about?show=listing", simplifyDataFrame = TRUE, simplifyVector = TRUE, simplifyMatrix = TRUE, flatten = TRUE)
   eic <- tibble::as_tibble(eic)
 
   if(unnest_facilities){
