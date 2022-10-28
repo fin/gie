@@ -126,7 +126,7 @@ gie_gas_facility_eic <- function(country_code, company_code, facility_code, api_
 
 
   cont_df <- gie_pagination_api(hostname = "agsi.gie.eu", country = country_code,
-                                company = company_code,
+                                company = company_code, facility = facility_code,
                                 max_pages = max_pages, api_key = api_key)
 
 
