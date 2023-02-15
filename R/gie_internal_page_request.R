@@ -29,6 +29,7 @@ gie_internal_page_request <- function(url, api_key, max_pages=10, country_code) 
   cont_obj <- jsonlite::fromJSON(cont)
 
   cont_df <- cont_obj$data
+  cont_df <- gie_type_fix(cont_df)
 
   page <- 1
 
@@ -76,7 +77,7 @@ gie_internal_page_request <- function(url, api_key, max_pages=10, country_code) 
 
     cont_obj <- jsonlite::fromJSON(cont)
 
-    cont_df <- dplyr::bind_rows(cont_df, cont_obj$data)
+    cont_df <- dplyr::bind_rows(cont_df, gie_type_fix(cont_obj$data))
 
     # Requests will be qeued if more than 60 requests per second.
     request_time <- as.numeric(Sys.time() - time_stamp)
@@ -121,6 +122,7 @@ gie_internal_page_request_lng <- function(url, api_key, max_pages=10, country_co
   cont_obj <- jsonlite::fromJSON(cont)
 
   cont_df <- cont_obj$data
+  cont_df <- gie_type_fix(cont_df)
 
   page <- 1
 
@@ -168,7 +170,7 @@ gie_internal_page_request_lng <- function(url, api_key, max_pages=10, country_co
 
     cont_obj <- jsonlite::fromJSON(cont)
 
-    cont_df <- dplyr::bind_rows(cont_df, cont_obj$data)
+    cont_df <- dplyr::bind_rows(cont_df, gie_type_fix(cont_obj$data))
 
     # Requests will be qeued if more than 60 requests per second.
     request_time <- as.numeric(Sys.time() - time_stamp)
@@ -181,6 +183,17 @@ gie_internal_page_request_lng <- function(url, api_key, max_pages=10, country_co
   cont_df
 }
 
+gie_type_fix <- function(df){
+
+  if("coveredCapacity" %in% names(df)){
+    df$coveredCapacity <- as.integer(df$coveredCapacity)
+  }
+  if("coveredCapacityTotal" %in% names(df)){
+    df$coveredCapacityTotal <- as.integer(df$coveredCapacityTotal)
+  }
+
+  df
+}
 
 #' Construct the url.
 #'
@@ -262,6 +275,7 @@ gie_pagination_api <- function(hostname, continent = NULL, country = NULL,
   cont_obj <- jsonlite::fromJSON(cont)
 
   cont_df <- cont_obj$data
+  cont_df <- gie_type_fix(cont_df)
 
   page <- 1
 
@@ -310,7 +324,7 @@ gie_pagination_api <- function(hostname, continent = NULL, country = NULL,
 
     cont_obj <- jsonlite::fromJSON(cont)
 
-    cont_df <- dplyr::bind_rows(cont_df, cont_obj$data)
+    cont_df <- dplyr::bind_rows(cont_df, gie_type_fix(cont_obj$data))
 
     # Requests will be qeued if more than 60 requests per second.
     request_time <- as.numeric(Sys.time() - time_stamp)
