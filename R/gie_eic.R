@@ -4,6 +4,7 @@
 #' @param eic_code The 21 digit eic code of the company as found on the API page.
 #' @param api_key The default is NULL and searches for your GIE_PAT in you .Renviron
 #'     file.
+#' @param max_pages Maximum number of pages.
 #'
 #' @export
 #'
@@ -14,9 +15,9 @@
 #'
 #' head(gie_gas_eic("AT", "25X-GSALLC-----E"))
 #'
-gie_gas_eic <- function(country_code, eic_code, api_key = NULL, ...){
+gie_gas_eic <- function(country_code, eic_code, api_key = NULL, max_pages = 3){
 
-  area <- toupper(country_code)
+  country_code <- toupper(country_code)
 
   if(length(country_code) > 1){
     stop("country_code only accepts a vector of length one.")
@@ -25,7 +26,7 @@ gie_gas_eic <- function(country_code, eic_code, api_key = NULL, ...){
 
   url <- paste0("https://agsi.gie.eu/api/data/", eic_code, "/", country_code)
 
-  cont_df <- gie_internal_page_request(url, api_key, ...)
+  cont_df <- gie_internal_page_request(url, api_key, max_pages = max_pages, country_code = country_code)
 
   if(nrow(cont_df) == 0){
     stop("No data with these parameters.")
@@ -51,13 +52,14 @@ gie_gas_eic <- function(country_code, eic_code, api_key = NULL, ...){
 #' @param eic_code The 21 digit eic code of the company as found on the API page.
 #' @param api_key The default is NULL and searches for your GIE_PAT in you .Renviron
 #'     file.
+#' @param max_pages Maximum number of pages.
 #'
 #' @export
 #'
 #'
-gie_lng_eic <- function(country_code, eic_code, api_key = NULL, ...){
+gie_lng_eic <- function(country_code, eic_code, api_key = NULL, max_pages = 3){
 
-  area <- toupper(country_code)
+  country_code <- toupper(country_code)
 
   if(length(country_code) > 1){
     stop("country_code only accepts a vector of length one.")
@@ -66,7 +68,7 @@ gie_lng_eic <- function(country_code, eic_code, api_key = NULL, ...){
 
   url <- paste0("https://alsi.gie.eu/api/data/", eic_code, "/", country_code)
 
-  cont_df <- gie_internal_page_request(url, api_key, ...)
+  cont_df <- gie_internal_page_request(url, api_key, max_pages = max_pages, country_code = country_code)
 
   if(nrow(cont_df) == 0){
     stop("No data with these parameters.")
