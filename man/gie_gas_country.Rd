@@ -4,13 +4,15 @@
 \alias{gie_gas_country}
 \title{Get the aggregated historical data export for for a specific country.}
 \usage{
-gie_gas_country(country_code, api_key = NULL, ...)
+gie_gas_country(country_code, api_key = NULL, max_pages = 5000)
 }
 \arguments{
 \item{country_code}{Two digit country code. Ex: NL, DE, DK, SE, FI etc.}
 
 \item{api_key}{The default is NULL and searches for your GIE_PAT in you .Renviron
 file.}
+
+\item{max_pages}{Maximum number of pages to download. Defaults to 5000 to get all.}
 }
 \description{
 Get the aggregated historical data export for for a specific country.

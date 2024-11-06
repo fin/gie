@@ -3,6 +3,8 @@
 #' @param area eu for Europe, ne for Non Europe.
 #' @param api_key The default is NULL and searches for your GIE_PAT in you .Renviron
 #'     file.
+#' @param max_pages How many pages to return in the paginated results. Defaults to 1000
+#'     so all results are returned as default.
 #'
 #' @export
 #'
@@ -28,18 +30,18 @@
 #'   labs(title = "End of June Gas Storage")
 #' }
 #'
-gie_gas_aggregate <- function(area, api_key = NULL, ...){
+gie_gas_aggregate <- function(area, api_key = NULL, max_pages = 1000){
 
-  area <- tolower(area)
+  area <- toupper(area)
   country_code = area
 
   # if(!area %in% c("ne", "eu") & length(area) > 1){
   #   stop("Area only accepts 'eu' or 'ne' and not both.")
   # }
 
-  url <- paste0("https://agsi.gie.eu/api/data/", area)
+  url <- paste0("https://agsi.gie.eu/api?continent=", area, "&size=300")
 
-  cont_df <- gie_internal_page_request(url, api_key, max_pages = 1000, country_code)
+  cont_df <- gie_internal_page_request(url, api_key, max_pages = max_pages, country_code)
 
   if(nrow(cont_df) == 0){
     stop("No data for this area.")
@@ -55,6 +57,8 @@ gie_gas_aggregate <- function(area, api_key = NULL, ...){
   })
   cont_df <- suppressMessages(readr::type_convert(cont_df, na = c("", "NA", "-")))
 
+  cont_df <- dplyr::arrange(cont_df, gasDayStart)
+
   cont_df
 }
 
@@ -64,6 +68,8 @@ gie_gas_aggregate <- function(area, api_key = NULL, ...){
 #' @param area eu for Europe, ne for Non Europe.
 #' @param api_key The default is NULL and searches for your GIE_PAT in you .Renviron
 #'     file.
+#' @param max_pages How many pages to return in the paginated results. Defaults to 1000
+#'     so all results are returned as default.
 #'
 #' @export
 #'
@@ -89,11 +95,12 @@ gie_gas_aggregate <- function(area, api_key = NULL, ...){
 #'   labs(title = "End of June Gas Storage")
 #' }
 #'
-gie_lng_aggregate <- function(area, api_key = NULL){
+gie_lng_aggregate <- function(area, api_key = NULL, max_pages = 1000){
 
-  area <- tolower(area)
+  area <- toupper(area)
+  country_code = area
 
-  if(!area %in% c("ne", "eu") & length(area) > 1){
+  if(!area %in% c("NE", "EU") & length(area) > 1){
     stop("Area only accepts 'eu' or 'ne' and not both.")
   }
 
@@ -101,23 +108,11 @@ gie_lng_aggregate <- function(area, api_key = NULL){
     api_key <- Sys.getenv("GIE_PAT")
   }
 
-  url <- paste0("https://alsi.gie.eu/api/data/", area)
+  url <- paste0("https://alsi.gie.eu/api?continent=", area, "&size=300")
 
-  resp <- httr::GET(url = url,
-                    httr::add_headers("x-key" = api_key))
+  cont_df <- gie_internal_page_request_lng(url, api_key, max_pages = max_pages, country_code = country_code)
 
-  if(httr::status_code(resp) != 200){
-    status_httr <- httr::http_status(resp)
-    stop(paste("Category:", status_httr$category,
-               "Reason:", status_httr$reason,
-               "Message:", status_httr$message))
-  }
-
-  cont <- httr::content(resp, as = "text", encoding = "UTF-8")
-
-  cont_df <- jsonlite::fromJSON(cont)
-
-  if(length(cont_df) == 0){
+  if(nrow(cont_df) == 0){
     stop("No data for this area.")
   }
 
@@ -130,5 +125,8 @@ gie_lng_aggregate <- function(area, api_key = NULL){
     x
   })
   cont_df <- suppressMessages(readr::type_convert(cont_df, na = c("", "NA", "-")))
+
+  cont_df <- dplyr::arrange(cont_df, gasDayStart)
+
   cont_df
 }
