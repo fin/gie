@@ -6,7 +6,7 @@
 #' @param max_pages Page results if possible, up to this number of pages.
 #'     Both a message and a warning are emitted if there are more pages
 #'     than this parameter specifies.
-gie_internal_page_request <- function(url, api_key, max_pages=10, country_code) {
+gie_internal_page_request <- function(url, api_key=NULL, max_pages=10, country_code) {
   initial_url <- url
 
   if(is.null(api_key)){
